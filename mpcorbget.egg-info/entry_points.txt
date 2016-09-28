@@ -1,0 +1,3 @@
+[console_scripts]
+mpcorbget = mpcorbget.__main__:main
+

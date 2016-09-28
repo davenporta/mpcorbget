@@ -38,7 +38,7 @@ class MPCORB:
         """Docstring"""
         print("----------------------------------------------\nFetching Observatory Data")
         obslist = requests.get("http://www.minorplanetcenter.net/iau/lists/ObsCodes.html", stream=True)
-        code = str(code) + " "
+        code = str(code).upper() + " "
         for line in obslist.iter_lines(decode_unicode=True):
             if code in line:
                 obslist.close()

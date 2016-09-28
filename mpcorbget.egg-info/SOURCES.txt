@@ -1,0 +1,10 @@
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+mpcorbget.egg-info/PKG-INFO
+mpcorbget.egg-info/SOURCES.txt
+mpcorbget.egg-info/dependency_links.txt
+mpcorbget.egg-info/entry_points.txt
+mpcorbget.egg-info/requires.txt
+mpcorbget.egg-info/top_level.txt

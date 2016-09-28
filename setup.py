@@ -32,7 +32,7 @@ setup(
 
     keywords='astronomy ephemeris ephem minorplanets research',
 
-    packages=find_packages()
+    packages=find_packages(),
 
     install_requires=['ephem', 'requests'],
 
