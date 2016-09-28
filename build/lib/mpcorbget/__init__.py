@@ -4,12 +4,26 @@ import ephem
 from math import atan2, degrees
 
 class MPCORB:
-    """Docstring will go here...
+    """This class represents a minor planet contained within the IAU Minor Planet Center database.
+    It retrieves the most recent data about the target from MPCORB.DAT.
 
-    ...Eventually"""
+    Arguments:
+        obj (string) - unpacked minor planet designation
+    """
 
     def __init__ (self, obj):
-        """Doc string"""
+        """Attributes:
+        obj - unpacked designation
+        objdata - raw mpc data
+        pdes - packed mpc designation
+        rdes - readable name and designation of minor planet
+        flags - (wip) raw hex data from mpc concerning minor planet class
+        H - H mag
+        G - slope parameter
+        orbEl - dictionary of orbital elements with epoch
+        xephem - mpc data in XEphem format
+        target - pyephem EllipticalBody object
+        """
 
         self.obj = obj
         self.objdata = self.getMPC()
@@ -24,7 +38,7 @@ class MPCORB:
         self.target = ephem.readdb(self.xephem)
 
     def getMPC(self):
-        """Docstring"""
+        """returns line from MPCORB.DAT"""
         print("----------------------------------------------\nFetching MPCORB.DAT")
         mpcorb = requests.get("http://www.minorplanetcenter.net/iau/MPCORB/MPCORB.DAT", stream=True)
         asteroid = "(%s)" % self.obj
@@ -35,7 +49,7 @@ class MPCORB:
                 return line
 
     def getObs(self, code):
-        """Docstring"""
+        """returns line from mpc observatory code list"""
         print("----------------------------------------------\nFetching Observatory Data")
         obslist = requests.get("http://www.minorplanetcenter.net/iau/lists/ObsCodes.html", stream=True)
         code = str(code).upper() + " "
@@ -46,7 +60,7 @@ class MPCORB:
                 return line
 
     def dateUnpack(self, packed):
-        """Docstring"""
+        """unpacks 5 character mpc date format into database format MM/DD/YYYY"""
         yearcode = {"I":"18","J":"19","K":"20"}
         daycode = "123456789ABCDEFGHIJKLMNOPQRSTUV"
         year = yearcode[packed[0]]+packed[1:3]
@@ -55,12 +69,19 @@ class MPCORB:
         return "%s/%s/%s" % (month, day, year)
 
     def geocentric(self, obstime):
-        """Docstring"""
+        """returns geocentric coordinates of target given time
+        Arguments:
+        obstime - date in YYYY/MM/DD HH/MM/SS format
+        """
         self.target.compute(obstime)
         return "RA: %s\nDec: %s" % (self.target.a_ra, self.target.a_dec)
 
     def topocentric(self, obs, obstime):
-        """Docstring"""
+        """returns topocentric coordinates of target given observatory code and date
+        Arguments:
+        obs - 3-character IAU observatory code
+        obstime - date in YYYY/MM/DD HH/MM/SS format
+        """
         obsstring = self.getObs(obs)
         cosl = float(obsstring[13:21].strip())
         sinl = float(obsstring[21:29].strip())
@@ -74,7 +95,6 @@ class MPCORB:
         return "Alt: %s\nAz: %s" % (self.target.alt, self.target.az)
 
 if __name__ == "__main__":
-
     print("QuickEphem v1.0 | Code by Alex Davenport\n----------------------------------------------")
     asteroid = input("Asteroid Designation: ")
     observatory = input("Observatory Code: ")

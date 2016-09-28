@@ -1,12 +1,12 @@
 Metadata-Version: 1.1
 Name: mpcorbget
-Version: 1.0.0a4
+Version: 1.0.0a5
 Summary: A tool for observing minor planets
 Home-page: https://github.com/davenporta/mpcorbget
 Author: Alexander Davenport
 Author-email: alexhdavenport@gmail.com
 License: MIT
-Description: mpcorbget v1.0.0a3
+Description: mpcorbget v1.0.0a5
         =======================
         
         This is a tool for planning observations of minor planets. It pulls data from the Minor Planet Center's MPCORB.DAT and its list of observatories and calculates the geocentric and topocentric coordinates of the object.

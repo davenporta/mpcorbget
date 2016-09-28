@@ -1,6 +1,7 @@
 import mpcorbget as mpc
 
 def main():
+    """Handy dandy quick ephemeris tool"""
     print("QuickEphem v1.0 | Code by Alex Davenport\n----------------------------------------------")
     asteroid = input("Asteroid Designation: ")
     observatory = input("Observatory Code: ")
