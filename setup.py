@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 setup(
     name='mpcorbget',
 
-    version='1.0.0a1',
+    version='1.0.0a4',
 
     description='A tool for observing minor planets',
     long_description=long_description,
@@ -32,7 +32,7 @@ setup(
 
     keywords='astronomy ephemeris ephem minorplanets research',
 
-    packages=find_packages(),
+    packages=["mpcorbget"],
 
     install_requires=['ephem', 'requests'],
 

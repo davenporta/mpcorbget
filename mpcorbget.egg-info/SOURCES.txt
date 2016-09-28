@@ -1,7 +1,10 @@
+LICENSE.txt
 MANIFEST.in
 README.rst
 setup.cfg
 setup.py
+mpcorbget/__init__.py
+mpcorbget/__main__.py
 mpcorbget.egg-info/PKG-INFO
 mpcorbget.egg-info/SOURCES.txt
 mpcorbget.egg-info/dependency_links.txt
