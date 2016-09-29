@@ -1,3 +1,9 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+from __future__ import with_statement
+from builtins import input
 import mpcorbget as mpc
 
 def main():
@@ -6,8 +12,8 @@ def main():
     asteroid = input("Asteroid Designation: ")
     observatory = input("Observatory Code: ")
     datetime = input("UTC (YYYY/MM/DD HH:MM:SS): ")
-    ast = MPCORB(asteroid)
-    observatory = Observatory(observatory)
+    ast = mpc.MPCORB(asteroid)
+    observatory = mpc.Observatory(observatory)
     geo = ast.geocentric(datetime)
     topo = ast.topocentric(observatory.location, datetime)
     print("----------------------------------------------")
