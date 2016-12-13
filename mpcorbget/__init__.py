@@ -7,6 +7,7 @@ from builtins import input
 import requests
 import string
 import ephem
+import binascii
 from math import atan2, degrees
 
 class MPCORB:
@@ -23,19 +24,20 @@ class MPCORB:
             objdata - raw mpc data
             pdes - packed mpc designation
             rdes - readable name and designation of minor planet
-            flags - (wip) raw hex data from mpc concerning minor planet class
             H - H mag
             G - slope parameter
             orbEl - dictionary of orbital elements with epoch
             xephem - mpc data in XEphem format
             target - pyephem EllipticalBody object
+
+            flags - abandoned by MPC until further notice
         """
 
         self.obj = obj
         self.objdata = self.getMPC()
         self.pdes = self.objdata[0:7].strip()
         self.rdes = self.objdata[166:194].strip()
-        self.flags = self.objdata[161:165].strip()
+        #self.flags = self.objdata[161:165].strip() #depreciated
         self.H = float(self.objdata[8:13].strip())
         self.G = float(self.objdata[14:19].strip())
         self.orbEl = {"epoch":self.dateUnpack(self.objdata[20:25].strip()),"ME":float(self.objdata[26:35].strip()),"w":float(self.objdata[37:46].strip()),"O":float(self.objdata[48:57].strip()),"i":float(self.objdata[59:68].strip()),"e":float(self.objdata[70:79].strip()),"a":float(self.objdata[92:103].strip()),"n":float(self.objdata[80:91].strip())}
@@ -83,6 +85,14 @@ class MPCORB:
         self.target.compute(obs)
         return "Alt: %s\nAz: %s" % (self.target.alt, self.target.az)
 
+    # def family(self): #depreciated
+    #     scale = 16 ## equals to hexadecimal
+    #     num_of_bits = 16
+    #     binflags = bin(int(self.flags, scale))[2:].zfill(num_of_bits)
+    #     orbtype = binflags[:6]
+    #     fam = binflags[11:]
+    #     return binflags
+
 class Observatory:
     """An object that contains data fetched from the IAU list of observatories.
 
@@ -121,15 +131,7 @@ class Observatory:
                 return line
 
 if __name__ == "__main__":
-    print("QuickEphem v1.1 | Code by Alex Davenport\n----------------------------------------------")
-    asteroid = input("Asteroid Designation: ")
-    observatory = input("Observatory Code: ")
-    datetime = input("UTC (YYYY/MM/DD HH:MM:SS): ")
+    asteroid = "162269"
+    observatory = "I12"
+    datetime = "2016/10/03 00:00:00"
     ast = MPCORB(asteroid)
-    observatory = Observatory(observatory)
-    geo = ast.geocentric(datetime)
-    topo = ast.topocentric(observatory.location, datetime)
-    print("----------------------------------------------")
-    print(geo)
-    print()
-    print(topo)
